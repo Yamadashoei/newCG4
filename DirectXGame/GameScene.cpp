@@ -2,7 +2,7 @@
 
 using namespace KamataEngine;
 
-GameScene::~GameScene() { // 3Dモデルデータの解放
+GameScene::~GameScene() {
 	delete modelEffect_;
 	delete effect_;
 }
@@ -24,6 +24,9 @@ void GameScene::Initialize() {
 	effect_ = new Effect();
 	// パーティクルの初期化
 	effect_->Initialize(modelEffect_, position);
+
+	// 乱数の初期化
+	srand((unsigned)time(NULL));
 }
 
 void GameScene::Update() { effect_->Update(); }

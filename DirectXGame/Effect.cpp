@@ -1,7 +1,13 @@
 #include "Effect.h"
+#include <cassert>
+#include <random>
 
 using namespace KamataEngine;
 using namespace MathUtility;
+
+std::random_device seedGenerator;
+std::mt19937 randomEngine(seedGenerator());
+std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 
 void Effect::Initialize(KamataEngine::Model* model, Vector3 position) {
 	assert(model);
@@ -14,6 +20,9 @@ void Effect::Initialize(KamataEngine::Model* model, Vector3 position) {
 	// 色の設定
 	objectColor_.Initialize();
 	color_ = {1, 1, 0, 1};
+
+	worldTransform_.scale_.y = std::abs(distribution(randomEngine) * 10.0f);
+	worldTransform_.rotation_.z = distribution(randomEngine) * 10.0f;
 }
 
 void Effect::Update() {
