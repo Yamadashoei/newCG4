@@ -3,15 +3,15 @@
 using namespace KamataEngine;
 using namespace MathUtility;
 
-void Particle::Initialize(KamataEngine::Model* model) {
+void Particle::Initialize(Model* model, Vector3 position) {
 	// Nullチェック
 	assert(model);
-
 	// 引数として受け取ったデータをメンバ変数に記録する
 	modelParticle_ = model;
+
 	// ワールド変換の初期化
 	worldTransform_.Initialize();
-
+	worldTransform_.translation_ = position;
 	// 色の設定
 	objectColor_.Initialize();
 	color_ = {1, 1, 0, 1};

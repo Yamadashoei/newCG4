@@ -8,7 +8,7 @@ class Particle {
 
 public:
 	// 初期化
-	void Initialize(KamataEngine::Model* model);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position);
 	// 更新
 	void Update();
 	// 描画
