@@ -22,6 +22,9 @@ public:
 	// 描画
 	void Draw();
 
+	// パーティクル発生
+	void ParticleBorn(KamataEngine::Vector3 position);
+
 private:
 	KamataEngine::DirectXCommon* dxCommon_ = nullptr;
 	KamataEngine::Input* input_ = nullptr;
