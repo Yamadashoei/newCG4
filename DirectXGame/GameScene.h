@@ -1,18 +1,12 @@
 #pragma once
+#include "Effect.h"
 #include "KamataEngine.h"
-#include "Particle.h"
 
-#include <3d/WorldTransform.h>
-#include <3d/Model.h>
-#include <3d/Camera.h>
-#include <base\DirectXCommon.h>
+using namespace KamataEngine;
 
-
- class GameScene {
+class GameScene {
 
 public:
-	// コンストラクタ
-	GameScene();
 	// デストラクタ
 	~GameScene();
 
@@ -28,12 +22,10 @@ private:
 	KamataEngine::Input* input_ = nullptr;
 	KamataEngine::Audio* audio_ = nullptr;
 
-	// パーティクルモデル
-	KamataEngine::Model* modelParticle_ = nullptr;
+	// エフェクトの3Dモデルデータ
+	Model* modelEffect_ = nullptr;
+	// エフェクト
+	Effect* effect_ = nullptr;
 	// カメラ
-	KamataEngine::Camera camera_;
-
-	//パーティクル
-	Particle* particle_ = nullptr;
-
+	Camera camera_;
 };

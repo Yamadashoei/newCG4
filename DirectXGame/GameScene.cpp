@@ -2,11 +2,9 @@
 
 using namespace KamataEngine;
 
-GameScene::GameScene() {}
-
-GameScene::~GameScene() {
-	delete modelParticle_;
-	delete particle_;
+GameScene::~GameScene() { // 3Dモデルデータの解放
+	delete modelEffect_;
+	delete effect_;
 }
 
 void GameScene::Initialize() {
@@ -14,30 +12,33 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// モデルの生成
-	modelParticle_ = Model ::CreateSphere(4, 4);
+	// 3Dモデルデータの生成
+	modelEffect_ = Model::CreateFromOBJ("effect", true);
+
 	// カメラの初期化
 	camera_.Initialize();
 
+	Vector3 position = {0.0f, 0.0f, 0.0f};
+
 	// パーティクルの生成
-	particle_ = new Particle();
+	effect_ = new Effect();
 	// パーティクルの初期化
-	particle_->Initialize(modelParticle_);
+	effect_->Initialize(modelEffect_, position);
 }
 
-void GameScene::Update() {
-	/// パーティクルの更新
-	particle_->Update();
-}
+void GameScene::Update() { effect_->Update(); }
 
 void GameScene::Draw() {
 	// DirectXCommon インスタンスの取得
-	// DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 #pragma region 背景スプライト描画
 	// 背景スプライト描画前処理
 	Sprite::PreDraw(commandList);
+
+	/// <summary>
+	/// ここに背景スプライトの描画処理を追加できる
+	/// </summary>
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -49,8 +50,14 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 
-	// パーティクルの描画
-	particle_->Draw(camera_);
+	/// <summary>
+	/// ここに3Dオブジェクトの描画処理を追加できる
+	///
+
+	// パーティクル描画
+	effect_->Draw(camera_);
+
+	/// </summary>
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -60,9 +67,12 @@ void GameScene::Draw() {
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);
 
+	/// <summary>
+	/// ここに前景スプライトの描画処理を追加できる
+	/// </summary>
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
 #pragma endregion
-
 }

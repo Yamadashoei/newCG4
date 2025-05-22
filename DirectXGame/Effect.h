@@ -1,13 +1,14 @@
 #pragma once
-#include "KamataEngine.h"
+#include <KamataEngine.h>
 
 using namespace KamataEngine;
 using namespace MathUtility;
 
+// エフェクト
 class Effect {
 public:
 	// 初期化
-	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 scale, KamataEngine::Vector3 rotation);
+	void Initialize(KamataEngine::Model* model, Vector3 position);
 
 	// 更新
 	void Update();
