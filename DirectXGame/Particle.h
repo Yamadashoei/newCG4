@@ -8,7 +8,7 @@ class Particle {
 
 public:
 	// 初期化
-	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position);
+	void Initialize(KamataEngine::Model* model, KamataEngine::Vector3 position, KamataEngine::Vector3 velocity);
 	// 更新
 	void Update();
 	// 描画
@@ -24,4 +24,6 @@ private:
 	KamataEngine::ObjectColor objectColor_;
 	// 色の数値
 	KamataEngine::Vector4 color_;
+	// 移動量
+	KamataEngine::Vector3 velocity_;
 };
