@@ -1,10 +1,14 @@
 #include "GameScene.h"
+#include <random>
 
 using namespace KamataEngine;
+using namespace MathUtility;
 
 GameScene::~GameScene() {
 	delete modelEffect_;
-	delete effect_;
+	for (Effect* e : effects_)
+		delete e;
+	effects_.clear();
 }
 
 void GameScene::Initialize() {
@@ -12,27 +16,41 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	// 3Dモデルデータの生成
 	modelEffect_ = Model::CreateFromOBJ("effect", true);
 
-	// カメラの初期化
+	// カメラ設定
 	camera_.Initialize();
+	camera_.translation_.z = -10.0f;
+	camera_.UpdateMatrix();
 
-	Vector3 position = {0.0f, 0.0f, 0.0f};
+	// ランダム初期化
+	std::random_device seedGen;
+	std::mt19937 engine(seedGen());
+	std::uniform_real_distribution<float> scaleXDist(0.03f, 0.1f);     // 太さ（横）
+	std::uniform_real_distribution<float> scaleYDist(0.5f, 1.0f);     // 長さ（縦）
+	std::uniform_real_distribution<float> rotOffsetDist(0.0f, 3.14f); // 少しだけブレさせる
 
-	// パーティクルの生成
-	effect_ = new Effect();
-	// パーティクルの初期化
-	effect_->Initialize(modelEffect_, position);
 
-	// 乱数の初期化
-	srand((unsigned)time(NULL));
+	for (int i = 0; i < 12; ++i) {
+
+		Vector3 scale = {
+		    scaleXDist(engine), // 太さもランダム
+		    scaleYDist(engine), // 長さもランダム
+		    1.0f};
+		Vector3 rotation = {0.0f, 0.0f, rotOffsetDist(engine)};
+
+		Effect* effect = new Effect();
+		effect->Initialize(modelEffect_, scale, rotation);
+		effects_.push_back(effect);
+	}
 }
 
-void GameScene::Update() { effect_->Update(); }
+void GameScene::Update() {
+	for (Effect* e : effects_)
+		e->Update();
+}
 
 void GameScene::Draw() {
-	// DirectXCommon インスタンスの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 #pragma region 背景スプライト描画
@@ -57,9 +75,10 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	///
 
-	// パーティクル描画
-	effect_->Draw(camera_);
-
+	
+	for (Effect* e : effects_) {
+		e->Draw(camera_);
+	}
 	/// </summary>
 
 	// 3Dオブジェクト描画後処理

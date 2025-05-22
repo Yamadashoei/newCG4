@@ -1,11 +1,11 @@
 #pragma once
 #include "Effect.h"
 #include "KamataEngine.h"
+#include <list>
 
 using namespace KamataEngine;
 
 class GameScene {
-
 public:
 	// デストラクタ
 	~GameScene();
@@ -18,14 +18,14 @@ public:
 	void Draw();
 
 private:
-	KamataEngine::DirectXCommon* dxCommon_ = nullptr;
-	KamataEngine::Input* input_ = nullptr;
-	KamataEngine::Audio* audio_ = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
+	Input* input_ = nullptr;
+	Audio* audio_ = nullptr;
 
 	// エフェクトの3Dモデルデータ
 	Model* modelEffect_ = nullptr;
-	// エフェクト
-	Effect* effect_ = nullptr;
+	// エフェクトの複数化
+	std::list<Effect*> effects_;
 	// カメラ
 	Camera camera_;
 };
