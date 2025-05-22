@@ -2,13 +2,12 @@
 #include "KamataEngine.h"
 #include "Particle.h"
 
-#include <3d/WorldTransform.h>
-#include <3d/Model.h>
 #include <3d/Camera.h>
+#include <3d/Model.h>
+#include <3d/WorldTransform.h>
 #include <base\DirectXCommon.h>
 
-
- class GameScene {
+class GameScene {
 
 public:
 	// コンストラクタ
@@ -33,7 +32,6 @@ private:
 	// カメラ
 	KamataEngine::Camera camera_;
 
-	//パーティクル
+	// パーティクル
 	Particle* particle_ = nullptr;
-
 };

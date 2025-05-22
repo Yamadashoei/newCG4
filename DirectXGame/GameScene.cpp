@@ -64,5 +64,4 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
-
 }
