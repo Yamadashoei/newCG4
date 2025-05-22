@@ -3,7 +3,7 @@
 using namespace KamataEngine;
 
 void Particle::Initialize(KamataEngine::Model*model) {
-	// Nullチェック
+	//Nullチェック
 	assert(model);
 
 	// 引数として受け取ったデータをメンバ変数に記録する
